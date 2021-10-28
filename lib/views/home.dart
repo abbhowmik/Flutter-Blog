@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text("         "),
             FloatingActionButton(
               onPressed: () {
                 Navigator.push(context,
@@ -35,7 +36,7 @@ class _HomeState extends State<Home> {
               // ignore: prefer_const_constructors
               child: Icon(
                 Icons.add,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
           ],
