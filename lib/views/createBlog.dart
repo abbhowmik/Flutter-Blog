@@ -53,19 +53,24 @@ class _CreateBlogState extends State<CreateBlog> {
           .child("${randomAlphaNumeric(9)}.jpg");
       UploadTask uploadTask = firebaseStorageRef.putFile(image!);
 
-      uploadTask.then((res) async {
-        downloadUrl = await res.ref.getDownloadURL();
-        print(downloadUrl);
-      });
-      // print("url is ****** 🙂🙂😋😋😊😊😎😎😎😋😎😎 $downloadUrl");
+      uploadTask.whenComplete(() async {
+        try {
+          downloadUrl = await firebaseStorageRef.getDownloadURL();
+        } catch (onError) {
+          print("Error is 🤣🤣🤣😂🤣🤣🤣 $onError");
+        }
 
-      Map<String, String> blogMap = {
-        "authorName": authorName,
-        "title": title,
-        "desc": description,
-        // "imageUrl": downloadUrl,
-      };
-      CrudMethods().addData(blogMap).then((result) => {Navigator.pop(context)});
+        // then push into database
+        Map<String, String> blogMap = {
+          "authorName": authorName,
+          "title": title,
+          "desc": description,
+          "imageUrl": downloadUrl,
+        };
+        CrudMethods()
+            .addData(blogMap)
+            .then((result) => {Navigator.pop(context)});
+      });
     } else {}
   }
 
