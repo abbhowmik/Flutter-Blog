@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blog/services/crud.dart';
 import 'package:flutter_blog/views/createBlog.dart';
 import 'package:flutter_blog/widgets/widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 itemCount: blogSnapShot!.docs.length,
                 itemBuilder: (context, index) {
                   return Blogs2Tile();
@@ -89,7 +91,8 @@ class _HomeState extends State<Home> {
         elevation: 0,
         title: appBar(context),
       ),
-      body: Container(child: BlogList2()),
+      body: Container(
+          margin: EdgeInsets.only(top: 24, bottom: 22), child: BlogList2()),
       floatingActionButton: Container(
         padding: EdgeInsets.symmetric(vertical: 18),
         child: Row(
@@ -119,42 +122,65 @@ class Blogs2Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      child: Stack(
-        children: [
-          Image.network(
-              "https://th.bing.com/th/id/OIP.OF59vsDmwxPP1tw7b_8clQHaE8?pid=ImgDet&rs=1"),
-          Container(
-            height: 150,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  Colors.black.withOpacity(.8),
-                  Colors.black.withOpacity(.0),
-                ],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 4),
+      child: Container(
+        height: 175,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(11),
+              child: Image.network(
+                "https://th.bing.com/th/id/OIP.OF59vsDmwxPP1tw7b_8clQHaE8?pid=ImgDet&rs=1",
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width,
               ),
             ),
-          ),
-          Container(
-            child: Column(
-              children: [
-                Text(
-                  "Puri Yatra",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Text("this is nothing to say for this nothing"),
-                Text("Ashis Bhowmik"),
-              ],
+            Container(
+              height: 175,
+              decoration: BoxDecoration(
+                color: Colors.black87.withOpacity(0.13),
+                borderRadius: BorderRadius.circular(11),
+              ),
             ),
-          )
-        ],
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Sunrise in Puri",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 30, right: 30),
+                    child: Text(
+                      "tBrush up your skills or learn from scratch. Increase your pace of learning  scratch. Increase your pace of learnin  scratch. Increase your pace of learnin  scratch. Increase your pace of learnin",
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "_ Ashis Bhowmik",
+                      style: TextStyle(color: Colors.white, fontSize: 11),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
