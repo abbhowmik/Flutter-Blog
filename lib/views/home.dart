@@ -47,10 +47,12 @@ class _HomeState extends State<Home> {
 
   Widget BlogList() {
     return Container(
+      margin: EdgeInsets.only(bottom: 20),
       child: blogSnapShot != null
           ? Column(
               children: [
                 ListView.builder(
+                    physics: ClampingScrollPhysics(),
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     shrinkWrap: true,
                     itemCount: blogSnapShot!.docs.length,
@@ -66,9 +68,10 @@ class _HomeState extends State<Home> {
               ],
             )
           : Container(
+              margin: EdgeInsets.only(top: 270),
               child: Center(
-              child: CircularProgressIndicator(),
-            )),
+                child: CircularProgressIndicator(),
+              )),
 
       // ignore: avoid_unnecessary_containers
     );
@@ -94,8 +97,10 @@ class _HomeState extends State<Home> {
         elevation: 0,
         title: appBar(context),
       ),
-      body: Container(
-        child: BlogList(),
+      body: SingleChildScrollView(
+        child: Container(
+          child: BlogList(),
+        ),
       ),
       floatingActionButton: Container(
         padding: EdgeInsets.symmetric(vertical: 18),
@@ -134,8 +139,14 @@ class BlogsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => DetailedBlogPage()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailedBlogPage(
+                    imgUrl: imgUrl,
+                    title: title,
+                    desc: desc,
+                    authorName: authorName)));
       },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 4),
@@ -145,8 +156,8 @@ class BlogsTile extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(11),
-                child: Image.network(
-                  imgUrl,
+                child: CachedNetworkImage(
+                  imageUrl: imgUrl,
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width,
                 ),
@@ -176,10 +187,13 @@ class BlogsTile extends StatelessWidget {
                     SizedBox(
                       height: 4,
                     ),
-                    Text(
-                      desc,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                      textAlign: TextAlign.center,
+                    Container(
+                      margin: EdgeInsets.only(right: 15, left: 15),
+                      child: Text(
+                        desc,
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     Container(
                       padding: EdgeInsets.only(right: 5, top: 9),

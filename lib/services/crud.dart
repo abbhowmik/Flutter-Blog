@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 class CrudMethods {
   Future<void> addData(blogData) async {
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("blogs")
         .add(blogData)
         .then((value) => print("Blog Added"))
